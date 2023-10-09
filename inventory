@@ -8,5 +8,5 @@
 [workstations]
 192.168.56.102 ansible_python_interpreter=/usr/bin/python3
 
-[file_servers]
+[file_server]
 192.168.56.102 ansible_python_interpreter=/usr/bin/python3
