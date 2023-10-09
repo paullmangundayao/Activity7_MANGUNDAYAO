@@ -1,0 +1,24 @@
+---
+- name: install unzip
+  package:
+    name: unzip
+
+- name: install terraform
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Find terraform binary
+  ansible.builtin.find:
+    paths: /usr/local/bin
+    patterns: terraform
+  register: terraform_binary
+
+- name: Set permissions for terraform binary
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: '0755'
+    owner: root
+    group: root
+  with_items: "{{ terraform_binary.files }}"

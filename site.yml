@@ -16,14 +16,28 @@
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
 
+- hosts: all
+  become: true
+  roles:
+    -  base
+
+- hosts: workstations
+  become: true
+  roles:
+    - workstations
+
 - hosts: web_servers
   become: true
-  tasks:
-    - name: copy default html file for site
-      tags: apache, apache2, httpd
-      copy:
-        src: default_site.html
-        dest: /var/www/html/index.html
-        owner: root
-        group: root
-        mode: 0644
+  roles:
+    - workstations
+
+- hosts: db_servers
+  become: true
+  roles:
+    - db_servers
+
+- hosts: file_server
+  become: true
+  roles:
+ 
+  - file_servers
